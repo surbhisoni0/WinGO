@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WinGo Colour Lab</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo"><i class="g"></i><i class="r"></i><i class="v"></i></span><div><h1>WinGo Colour Lab</h1><p>Colour analysis tested on unseen history</p></div></div>
+  <div class="status" id="status">connecting…</div>
+</header>
+<div class="banner" role="note"><strong>Honest note.</strong> The pick below is a statistical guess. Testing on unseen rounds shows it is no better than guessing a colour at random, so treat it as a coin flip. No tool can guarantee a win; this one places no bets.</div>
+<nav class="tabs" id="tabs">
+  <button data-tab="dash" class="on">Predict</button><button data-tab="history">History</button>
+  <button data-tab="perf">Accuracy</button><button data-tab="analysis">Data</button><button data-tab="add">Add rounds</button>
+</nav>
+<main>
+<section id="tab-dash" class="tab on">
+  <div class="grid two">
+    <article class="card hero" id="pick"><h2>Next colour</h2><div class="skeleton">loading…</div></article>
+    <article class="card" id="reality"><h2>Reality check <small>colour accuracy on rounds the model had not seen</small></h2><div class="skeleton">loading…</div></article>
+  </div>
+  <article class="card"><h2>Last 40 rounds <small>oldest → newest, hover for the number</small></h2><div id="strip" class="strip"></div></article>
+  <div class="grid two">
+    <article class="card" id="mix"><h2>Colour mix <small>share of all stored rounds</small></h2><div class="skeleton">loading…</div></article>
+    <article class="card" id="models"><h2>Each model's colour pick</h2><div class="skeleton">loading…</div></article>
+  </div>
+</section>
+<section id="tab-history" class="tab">
+  <article class="card"><h2>Prediction history</h2>
+    <div class="tablewrap"><table id="hist"><thead><tr><th>Round</th><th>Picked</th><th>Actual</th><th>Result</th></tr></thead><tbody></tbody></table></div>
+    <button id="more" class="btn ghost">Load more</button></article>
+</section>
+<section id="tab-perf" class="tab">
+  <article class="card" id="perf-live"><h2>Live accuracy <small>picks made before the result arrived</small></h2><div class="skeleton">loading…</div></article>
+  <article class="card" id="perf-bt"><h2>Walk-forward test <small>each round predicted using only earlier rounds</small></h2><div class="skeleton">loading…</div></article>
+  <div class="grid two"><article class="card"><h2>Accuracy over time <small>rolling 100 · vs random</small></h2><div id="chart-roll"></div></article>
+  <article class="card"><h2>Live accuracy over time</h2><div id="chart-live"></div></article></div>
+</section>
+<section id="tab-analysis" class="tab">
+  <div class="grid two"><article class="card"><h2>Number distribution <small>dashed = 10% expected</small></h2><div id="chart-dist"></div></article>
+  <article class="card"><h2>Recent frequency <select id="win"><option>20</option><option selected>50</option><option>100</option></select></h2><div id="chart-recent"></div></article></div>
+  <div class="grid two"><article class="card"><h2>Big / Small</h2><div id="chart-bs"></div></article><article class="card"><h2>Colour</h2><div id="chart-color"></div></article></div>
+  <article class="card"><h2>Randomness tests</h2><div id="tests"></div></article>
+  <article class="card"><h2>Data quality</h2><div id="dq"></div></article>
+</section>
+<section id="tab-add" class="tab">
+  <article class="card"><h2>Paste rounds from the website</h2>
+    <p class="muted">Copy rows from the game's history list and paste them here, one round per line (for example <code>5 Big green violet</code>). Only paste rounds <b>newer</b> than the last stored one. Nothing is fetched from any website.</p>
+    <textarea id="paste" rows="6" spellcheck="false" placeholder="20260101100051234 5 Big green violet&#10;20260101100051235 2 Small red"></textarea>
+    <div class="row"><label class="inline"><input type="checkbox" id="pnewest"> newest round is on top</label><button class="btn" id="dopaste">Import pasted rounds</button></div>
+    <div id="pastemsg" class="msg"></div>
+  </article>
+  <article class="card"><h2>Add one result</h2>
+    <p class="muted">Tap the number that was drawn. It is stored, compared with the pending pick, and a new pick is made.</p>
+    <div class="pad" id="pad"></div>
+    <div class="row"><label>Round ID <small>(optional, digits)</small><input id="period" inputmode="numeric" maxlength="32" autocomplete="off"></label>
+    <label>Time <small>(optional)</small><input id="ts" type="datetime-local"></label>
+    <label>API key <small>(only if set in .env)</small><input id="key" type="password" autocomplete="off"></label></div>
+    <div id="addmsg" class="msg"></div>
+  </article>
+  <article class="card"><h2>Import CSV</h2>
+    <p class="muted">Columns: <code>number</code> (required), <code>period_id</code>, <code>timestamp</code>. Keep period IDs as text.</p>
+    <div class="row"><input type="file" id="csv" accept=".csv,text/csv"><label class="inline"><input type="checkbox" id="newest"> newest round first in file</label><button class="btn" id="doimport">Import</button></div>
+    <div id="impmsg" class="msg"></div>
+  </article>
+</section>
+</main>
+<footer>Analysis only · no guarantee of any outcome · no betting, deposit or withdrawal features</footer>
+<script src="js/app.js"></script>
+</body>
+</html>
